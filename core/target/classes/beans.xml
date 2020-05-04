@@ -5,4 +5,17 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="numberGenerator" class="shmathes.github.NumberGeneratorImpl"/>
+
+    <bean id="game" class="shmathes.github.GameImpl">
+        <!--
+        Adds reference to the numberGenerator bean.
+        This is to work with constructor based injection
+        -->
+        <!--
+        <constructor-arg ref="numberGenerator"/>
+        -->
+
+        <property name="numberGenerator" ref="numberGenerator"/>
+    </bean>
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 </beans>
