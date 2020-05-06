@@ -31,18 +31,21 @@ public class Main
         log.info("number = {}", number);
 
         //Get game bean from context (container)
-        Game game = context.getBean(Game.class);
+        //Game game = context.getBean(Game.class);
 
         //call reset method
         //game.reset();
 
+        //Get MessengerGenerator bean from context
         MessageGenerator messageGenerator = context.getBean(MessageGenerator.class);
 
         //Call MessageGenerator methods
         String mainMessage = messageGenerator.getMainMessage();
         String resultMessage = messageGenerator.getResultMessage();
 
-        log.info("Main message = {} | Result message = {}", mainMessage, resultMessage);
+        //log message generator messages
+        log.info("Main message = {}", mainMessage);
+        log.info("Result message = {}", resultMessage);
 
         //close context
         context.close();
