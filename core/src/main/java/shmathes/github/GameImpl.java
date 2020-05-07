@@ -8,16 +8,16 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-//@Component
+@Component
 public class GameImpl implements Game
 {
     // == constants ==
     private static final Logger log = LoggerFactory.getLogger(GameImpl.class);
 
     // == fields ==
-    @Autowired
-    private NumberGenerator numberGenerator;
-    private int guessCount = 10;
+
+    private final NumberGenerator numberGenerator;
+    private final int guessCount;
     private int number;
     private int guess;
     private int smallest;
@@ -25,13 +25,22 @@ public class GameImpl implements Game
     private int remainingGuesses;
     private boolean validNumberRange = true;
 
+    // == constructors ==
+
+    @Autowired
+    public GameImpl(NumberGenerator numberGenerator, @GuessCount int guessCount)
+    {
+        this.numberGenerator = numberGenerator;
+        this.guessCount = guessCount;
+    }
+
     // == init ==
     @PostConstruct
     @Override
     //Resets game to the starting values
     public void reset()
     {
-        smallest = 0;
+        smallest = numberGenerator.getMinNumber();
         guess = 0;
         remainingGuesses = guessCount;
         largest = numberGenerator.getMaxNumber();
@@ -43,12 +52,6 @@ public class GameImpl implements Game
     public void preDestroy(){
         log.info("in Game preDestroy()");
     }
-
-    // == constructors ==
-//    public GameImpl(NumberGenerator numberGenerator)
-//    {
-//        this.numberGenerator = numberGenerator;
-//    }
 
     // == public methods ==
     //public void setNumberGenerator(NumberGenerator numberGenerator){
@@ -91,6 +94,9 @@ public class GameImpl implements Game
         return remainingGuesses;
     }
 
+
+    @Override
+    public int getGuessCount(){return guessCount;}
 
     @Override
     public void check()
